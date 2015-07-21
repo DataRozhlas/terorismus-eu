@@ -14,3 +14,7 @@ class ig.Years
           ..style \left (d, i) -> "#{5 * (i % 4)}px"
           ..style \background-color -> it.incident.group.color
           ..style \border-color -> it.incident.group.lightColor
+        ..filter(-> 0 == it.year % 5)
+          ..append \span
+            ..attr \class \title
+            ..html -> it.year
