@@ -13,7 +13,13 @@ for datum in data
     death =
       incident: datum
     year.deaths.push death
-  year.deaths.sort (a, b) -> a.incident.group.index - b.incident.group.index
+  year.deaths.sort (a, b) ->
+    if a.incident.group.index - b.incident.group.index
+      that
+    else if a.incident.index - b.incident.index
+      that
+    else
+      0
 
 
 new ig.Years container, years, groups

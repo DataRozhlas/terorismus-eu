@@ -73,16 +73,17 @@ groupsToCategories =
 
 
 ig.getData = ->
-  data = d3.tsv.parse ig.data.utoky, (row) ->
+  data = d3.tsv.parse ig.data.utoky, (row, index) ->
     for field, value of row
       continue if field is "name"
       row[field] = parseFloat value
-      row.date = new Date!
-        ..setTime 0
-        ..setFullYear row.year
-        ..setMonth row.month - 1
-        ..setDate row.day
-      row.category = groupsToCategories[row.name] || "other"
-      row.group = groups[row.category]
+    row.date = new Date!
+      ..setTime 0
+      ..setFullYear row.year
+      ..setMonth row.month - 1
+      ..setDate row.day
+    row.category = groupsToCategories[row.name] || "other"
+    row.group = groups[row.category]
+    row.index = index
     row
   {data, groups}
