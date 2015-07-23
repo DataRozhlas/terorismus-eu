@@ -29,7 +29,6 @@ for year in years
     death.yearIndex = index
 
 
-
 new ig.Years container, years, deaths, groups
 
 # console.log do

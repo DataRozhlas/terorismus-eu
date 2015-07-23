@@ -17,7 +17,16 @@ class ig.Years
       ..style \bottom (d, i) -> "#{5 * Math.floor d.yearIndex / 4 }px"
       ..style \left (d, i) -> "#{d.year.index * 21 +  5 * (d.yearIndex % 4)}px"
       ..style \background-color -> it.incident.group.color
-      ..style \border-color -> it.incident.group.lightColor
+      ..style \border-top-color (it, i) ->
+        if deaths[i+4] && it.incident == deaths[i+4].incident
+          it.incident.group.color
+        else
+          it.incident.group.lightColor
+      ..style \border-right-color (it, i) ->
+        if deaths[i+1] && it.incident == deaths[i+1].incident
+          it.incident.group.color
+        else
+          it.incident.group.lightColor
       ..on \mouseover @~highlightIncident
       ..on \touchstart @~highlightIncident
 
