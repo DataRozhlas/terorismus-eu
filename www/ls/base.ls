@@ -30,7 +30,7 @@ for year in years
 
 
 new ig.Years container, years, deaths, groups
-
+# new ig.Map container, deaths
 # console.log do
 #   years
 #     .map -> "#{it.year}\t#{it.deathsTotal}"

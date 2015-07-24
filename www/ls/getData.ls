@@ -29,6 +29,11 @@ groups =
     color: \#a65628
     lightColor: \#ce6c34
     index: 4
+scale = d3.scale.linear!
+
+for name, group of groups
+  scale.range ['#ffffff', group.color]
+  group.lightColor = scale 0.8
 
 ig.getData = ->
   data = d3.tsv.parse ig.data.utoky, (row, index) ->

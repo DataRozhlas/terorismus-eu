@@ -1,5 +1,7 @@
-radius = 4
+radius = 3
+cellsPerRow = 7
 margin = 1
+yearWidth = 21
 class ig.Years
   (@parentElement, years, deaths, groupsAssoc) ->
     groups = for name, group of groupsAssoc
@@ -13,11 +15,12 @@ class ig.Years
             ..attr \class \title
             ..html -> it.year
     @items = @element.selectAll \div.death .data deaths .enter!append \div
-      ..attr \class (d) -> "death #{if 3 == d.yearIndex % 4 then 'last-col' else ''}"
-      ..style \bottom (d, i) -> "#{5 * Math.floor d.yearIndex / 4 }px"
-      ..style \left (d, i) -> "#{d.year.index * 21 +  5 * (d.yearIndex % 4)}px"
+      ..attr \class (d) -> "death #{if 1 == cellsPerRow - (d.yearIndex % cellsPerRow) then 'last-col' else ''}"
+      ..style \bottom (d, i) -> "#{radius * Math.floor d.yearIndex / cellsPerRow }px"
+      ..style \left (d, i) -> "#{d.year.index * yearWidth +  radius * (d.yearIndex % cellsPerRow)}px"
       ..style \background-color -> it.incident.group.color
-      ..style \border-color (it, i) -> it.incident.group.lightColor
+      ..style \border-color (it, i) ->
+        it.incident.group.lightColor
       ..on \mouseover @~highlightIncident
       ..on \touchstart @~highlightIncident
 
