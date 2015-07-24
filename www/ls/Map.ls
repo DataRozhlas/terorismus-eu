@@ -12,8 +12,8 @@ class ig.Map
     countries = topojson.feature do
       ig.data.world
       ig.data.world.objects.countries
-    width = 600
-    bounds = [[-16.7, 28.1], [34, 60.5]]
+    width = 700
+    bounds = [[-16.7, 15], [37, 60.5]]
 
     projection = ig.utils.geo.getProjection bounds, width
     {height} = ig.utils.geo.getDimensions bounds, projection
@@ -35,6 +35,8 @@ class ig.Map
         ..attr \r 4
         ..attr \cx -> it.projected.0
         ..attr \cy -> it.projected.1
+        ..attr \fill -> it.group.color
+        ..attr \stroke -> it.group.lightColor
         ..transition!
           # ..delay (d, i) -> Math.floor i / 10
         ..attr \class "active"
