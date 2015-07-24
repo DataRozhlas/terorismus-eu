@@ -31,13 +31,57 @@ stories =
       * text: "<p>Nejnovějšími incidenty jsou dvě anonymní dopisové bomby z listopadu 2014, které dorazily ministru vnitra Chovancovi a ministru financí Babišovi. Nikdo nebyl zraněn a nikdo se k útoku nepřihlásil. Podle databáze nicméně útok může souviset s českou podporou boje proti Islámskému státu v Iráku a Levantu.</p>"
 
 
-storyToDisplay = 4
+
 class ig.Storyteller
   (@parentElement) ->
+    @currentStory = 4
+    @currentPage = 0
     @element = @parentElement.append \div
       ..attr \class \story
-      ..append \h2
-        ..html stories[storyToDisplay].title
-      ..append \div
-        ..attr \class \content
-        ..html stories[storyToDisplay].pages.0.text
+    @titleElement = @element.append \h2
+      ..html stories[@currentStory].title
+    @contentElement = @element.append \div
+      ..attr \class \content
+    @contentInner = @contentElement.append \div
+      ..attr \class \container
+      ..html stories[@currentStory].pages[@currentPage].text
+    @createPager!
+
+  createPager: ->
+    @pager = @element.append \div
+      ..attr \class "pager display-next display-hint"
+      ..append \a
+        ..attr \class \prev
+        ..attr \href \#
+        ..html "<span class='arrow'>‹</span>"
+        ..on \click ~>
+          d3.event.preventDefault!
+          @changePage -1
+      ..append \a
+        ..attr \class \next
+        ..attr \href \#
+        ..html "<span class='hint'>Další strana </span><span class='arrow'>›</span>"
+        ..on \click ~>
+          d3.event.preventDefault!
+          @changePage +1
+
+  changePage: (direction) ->
+    @currentPage += direction
+    @currentPage %%= stories[@currentStory].pages.length
+    @pager.classed \display-next @currentPage < (stories[@currentStory].pages.length - 1)
+    @pager.classed \display-prev @currentPage > 0
+    @pager.classed \display-hint no
+    @contentInner
+      ..classed \leaving yes
+      ..transition!
+        ..duration 800
+        ..remove!
+    @updateContentElement!
+
+  updateContentElement: ->
+    @contentInner = @contentElement.append \div
+      ..attr \class "container entering"
+      ..html stories[@currentStory].pages[@currentPage].text
+      ..transition!
+        ..delay 1
+        ..attr \class "container"

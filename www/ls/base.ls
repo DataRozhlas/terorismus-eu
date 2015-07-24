@@ -28,9 +28,8 @@ for year in years
   for death, index in year.deaths
     death.yearIndex = index
 
-
 new ig.Map container, data
-new ig.Years container, years, deaths, groups
+# new ig.Years container, years, deaths, groups
 new ig.Storyteller container
 # console.log do
 #   years

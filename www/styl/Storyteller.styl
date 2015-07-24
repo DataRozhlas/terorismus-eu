@@ -10,3 +10,67 @@
     font-size 1.8em
   p
     line-height 1.8em
+  .content
+    position relative
+    .container
+      position absolute
+      top 0px
+      left 0px
+      transition left 0.4s, opacity 0.4s
+      opacity 1
+      width 340px
+      &.leaving
+        opacity 0
+        left -400px
+      &.entering
+        opacity 0
+        left 400px
+
+  .pager
+    position absolute
+    top 291px
+    right -30px
+    a
+      color white
+      text-decoration none
+      position absolute
+      top 0px
+      &.prev
+        left 0px
+      &.next
+        left 45px
+      .hint
+        font-weight 100
+        border-bottom 1px solid white
+        text-align right
+        position absolute
+        top -4px
+        right 10px
+
+      .arrow
+        display block
+        border 1px solid white
+        text-align center
+        line-height 26px
+        width 33px
+        height 33px
+        font-size 33px
+        border-radius 50%
+        position absolute
+        top 0px
+        left 0px
+        background rgba(255,255,255,0)
+        transition background 0.2s
+      &:hover .arrow
+        background rgba(255,255,255,0.3)
+    a
+    .hint
+      opacity 0
+      pointer-events none
+      transition opacity 0.4s
+    &.display-next a.next
+    &.display-prev a.prev
+    &.display-hint a.next .hint
+        opacity 1
+        pointer-events auto
+

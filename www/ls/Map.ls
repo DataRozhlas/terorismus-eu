@@ -20,10 +20,8 @@ class ig.Map
     path = d3.geo.path!
       ..projection projection
 
-    # console.log incidents
     for incident in @incidents
       incident.projected = projection [incident.longitude, incident.latitude]
-
 
     @element = @parentElement.append \svg
       ..attr \class \map
@@ -31,14 +29,14 @@ class ig.Map
       ..append \path
         ..attr \class \land
         ..attr \d path land.geometry
-      ..selectAll \circle .data @incidents .enter!append \circle
-        ..attr \r 4
-        ..attr \cx -> it.projected.0
-        ..attr \cy -> it.projected.1
-        ..attr \fill -> it.group.color
-        ..attr \stroke -> it.group.lightColor
-        ..transition!
-          # ..delay (d, i) -> Math.floor i / 10
-        ..attr \class "active"
+      # ..selectAll \circle .data @incidents .enter!append \circle
+      #   ..attr \r 4
+      #   ..attr \cx -> it.projected.0
+      #   ..attr \cy -> it.projected.1
+      #   ..attr \fill -> it.group.color
+      #   ..attr \stroke -> it.group.lightColor
+      #   ..transition!
+      #     # ..delay (d, i) -> Math.floor i / 10
+      #   ..attr \class "active"
 
 
