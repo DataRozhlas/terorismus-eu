@@ -2,32 +2,26 @@ groups =
   "Konflikt v Severním Irsku":
     name: "Konflikt v Severním Irsku"
     color: \#984ea3
-    lightColor: \#ad68b7
-    index: 1
+    index: 0
   "Baskický separatismus":
     name: "Baskický separatismus"
-    color: \#984ea3
-    lightColor: \#ad68b7
-    index: 2
+    color: \#6d3875
+    index: 1
   "Arabský a islámský terorismus":
     name: "Arabský a islámský terorismus"
     color: \#377eb8
-    lightColor: \#5295cb
-    index: 0
+    index: 2
   "Ostatní":
     name: "Ostatní"
     color: \#999999
-    lightColor: \#aaa
     index: 5
   "Extrémní levice":
     name: "Extrémní levice"
     color: \#e41a1c
-    lightColor: \#e94042
     index: 3
   "Extrémní pravice":
     name: "Extrémní pravice"
     color: \#a65628
-    lightColor: \#ce6c34
     index: 4
 scale = d3.scale.linear!
 
@@ -35,7 +29,6 @@ for name, group of groups
   scale.range ['#000', group.color]
   group.darkColor = scale 0.85
   scale.range ['#fff', group.color]
-  group.lightColor = scale 0.85
 
 ig.getData = ->
   data = d3.tsv.parse ig.data.utoky, (row, index) ->
