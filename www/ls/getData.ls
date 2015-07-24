@@ -48,4 +48,5 @@ ig.getData = ->
     row.group = groups[row.group]
     row.index = index
     row
+
   {data, groups}

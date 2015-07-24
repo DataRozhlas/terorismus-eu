@@ -29,8 +29,8 @@ for year in years
     death.yearIndex = index
 
 
-new ig.Years container, years, deaths, groups
-# new ig.Map container, deaths
+# new ig.Years container, years, deaths, groups
+new ig.Map container, data
 # console.log do
 #   years
 #     .map -> "#{it.year}\t#{it.deathsTotal}"
