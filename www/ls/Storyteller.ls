@@ -44,11 +44,13 @@ class ig.Storyteller
     @currentPage = 0
     @element = @parentElement.append \div
       ..attr \class \story
-    @titleElement = @element.append \h2
-      ..html stories[@currentStory].title
     @contentElement = @element.append \div
       ..attr \class \content
-    @contentInner = @contentElement.append \div
+    @titleElement = @contentElement.append \h2
+      ..html stories[@currentStory].title
+    @paragraphElement = @contentElement.append \div
+      ..attr \class \paragraph
+    @paragraphInner = @paragraphElement.append \div
       ..attr \class \container
       ..html stories[@currentStory].pages[@currentPage].text
     @createPager!
@@ -64,6 +66,7 @@ class ig.Storyteller
         ..on \click ~>
           d3.event.preventDefault!
           @changePage -1
+        ..on \mousedown ~> d3.event.preventDefault!
       ..append \a
         ..attr \class \next
         ..attr \href \#
@@ -71,22 +74,55 @@ class ig.Storyteller
         ..on \click ~>
           d3.event.preventDefault!
           @changePage +1
+        ..on \mousedown ~> d3.event.preventDefault!
 
-  changePage: (direction) ->
+  changePage: (direction, changeStory = no) ->
     @currentPage += direction
-    @currentPage %%= stories[@currentStory].pages.length
-    @pager.classed \display-next @currentPage < (stories[@currentStory].pages.length - 1)
-    @pager.classed \display-prev @currentPage > 0
+    if @currentPage > stories[@currentStory].pages.length - 1
+      @currentStory++
+      changeStory = yes
+      @currentPage = 0
+    if @currentPage < 0
+      @currentStory--
+      changeStory = yes
+      @currentPage = 0
+    @pager.classed \display-next not (@isLastStory! && @isLastPage!)
+    @pager.classed \display-prev not (@currentStory == @currentPage == 0)
     @pager.classed \display-hint no
-    @contentInner
+
+    if changeStory
+      @changeStory!
+    else
+      @changeParagraph!
+    @updateStorySelector!
+
+  changeStory: ->
+    @contentElement
       ..classed \leaving yes
       ..transition!
         ..duration 800
         ..remove!
-    @updateContentElement!
+    @contentElement = @element.append \div
+      ..attr \class "content entering"
+      ..transition!
+        ..delay 1
+        ..attr \class \content
+    @titleElement = @contentElement.append \h2
+      ..html stories[@currentStory].title
+    @paragraphElement = @contentElement.append \div
+      ..attr \class \paragraph
+    @paragraphInner = @paragraphElement.append \div
+      ..attr \class \container
+      ..html stories[@currentStory].pages[@currentPage].text
 
-  updateContentElement: ->
-    @contentInner = @contentElement.append \div
+
+  changeParagraph: ->
+    @paragraphInner
+      ..classed \leaving yes
+      ..transition!
+        ..duration 800
+        ..remove!
+    @paragraphInner = @paragraphElement.append \div
       ..attr \class "container entering"
       ..html stories[@currentStory].pages[@currentPage].text
       ..transition!
@@ -94,9 +130,26 @@ class ig.Storyteller
         ..attr \class "container"
 
   createStorySelector: ->
-    @parentElement.append \ul
-      ..attr \class \story-selector
-      ..selectAll \li .data stories .enter!append \li
-        ..append \a
+    @storySelectorElements = @parentElement.append \ul
+      .attr \class \story-selector
+      .selectAll \li .data stories .enter!append \li
+        .append \a
           ..attr \href \#
           ..html (.topHeading)
+          ..on \click (d, i) ~>
+            d3.event.preventDefault!
+            return if i == @currentStory
+            @currentStory = i
+            @currentPage = 0
+            @changePage 0, yes
+
+
+  updateStorySelector: ->
+    @storySelectorElements.classed \active (d, i) ~>
+      @currentStory == i
+
+  isLastStory: ->
+    @currentStory == stories.length - 1
+
+  isLastPage: ->
+    @currentPage == stories[@currentStory].pages.length - 1
