@@ -28,7 +28,10 @@ class ig.Years
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.introStartX}px"
       ..style \bottom (d) -> "#{radius * d.introY}px"
-      ..style \width (d) -> "#{radius * (d.introEndX - d.introStartX)}px"
+      ..style \width (d) ->
+        w = radius * (d.introEndX - d.introStartX)
+        w-- if d.introEndX == cellsPerRow
+        "#{w}px"
       ..style \background-color ->
         console.log it
         it.group.color
@@ -39,7 +42,10 @@ class ig.Years
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.outroStartX}px"
       ..style \bottom (d) -> "#{radius * d.outroY}px"
-      ..style \width (d) -> "#{radius * (d.outroEndX - d.outroStartX)}px"
+      ..style \width (d) ->
+        w = radius * (d.outroEndX - d.outroStartX)
+        w-- if d.outroEndX == cellsPerRow
+        "#{w}px"
       ..style \background-color -> it.group.color
 
     @incidentsParent.selectAll \div.incident.main .data mains, (.id)
@@ -48,20 +54,12 @@ class ig.Years
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.mainStartX}px"
       ..style \bottom (d) -> "#{radius * d.mainStartY}px"
-      ..style \width (d) -> "#{radius * (d.mainEndX - d.mainStartX)}px"
+      ..style \width (d) ->
+        w = radius * (d.mainEndX - d.mainStartX)
+        w-- if d.mainEndX == cellsPerRow
+        "#{w}px"
       ..style \height (d) -> "#{radius * (d.mainEndY - d.mainStartY)}px"
       ..style \background-color -> it.group.color
-    # console.log intros.length + outros.length + mains.length
-    # console.log @bigIncidents.length * 3
-    return
-    @items = @element.selectAll \div.death .data @bigIncidents .enter!append \div
-      ..attr \class "death"
-      ..style \bottom (d, i) -> "#{bottomPadding + radius * Math.floor d.yearIndex / cellsPerRow}px"
-      ..style \left (d, i) -> "#{d.year.index * yearWidth +  radius * (d.yearIndex % cellsPerRow)}px"
-      ..style \background-color -> it.incident.group.color
-      ..style \border-color (it, i) -> it.incident.group.darkColor
-      ..on \mouseover @~highlightIncident
-      ..on \touchstart @~highlightIncident
 
   resortYears: (deferGroupId) ->
     for id, group of @groupsAssoc
