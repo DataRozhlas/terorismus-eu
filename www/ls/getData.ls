@@ -11,10 +11,6 @@ groups =
     name: "Arabský a islámský terorismus"
     color: \#377eb8
     index: 2
-  "Ostatní":
-    name: "Ostatní"
-    color: \#999999
-    index: 5
   "Extrémní levice":
     name: "Extrémní levice"
     color: \#e41a1c
@@ -23,6 +19,10 @@ groups =
     name: "Extrémní pravice"
     color: \#a65628
     index: 4
+  "Ostatní":
+    name: "Ostatní"
+    color: \#999999
+    index: 5
 scale = d3.scale.linear!
 
 for name, group of groups
