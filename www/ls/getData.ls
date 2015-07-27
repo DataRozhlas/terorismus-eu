@@ -29,6 +29,7 @@ for name, group of groups
   scale.range ['#000', group.color]
   group.darkColor = scale 0.85
   scale.range ['#fff', group.color]
+  group.lightColor = scale 0.65
 
 ig.getData = ->
   data = d3.tsv.parse ig.data.utoky, (row, index) ->

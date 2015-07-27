@@ -30,7 +30,6 @@ class ig.Years
         w = radius * (d.introEndX - d.introStartX)
         w-- if d.introEndX == cellsPerRow
         "#{w}px"
-      ..style \background-color -> it.group.color
 
     @incidentsParent.selectAll \div.incident.outro .data outros, (.id)
       ..enter!append \div
@@ -42,7 +41,6 @@ class ig.Years
         w = radius * (d.outroEndX - d.outroStartX)
         w-- if d.outroEndX == cellsPerRow
         "#{w}px"
-      ..style \background-color -> it.group.color
 
     @incidentsParent.selectAll \div.incident.main .data mains, (.id)
       ..enter!append \div
@@ -55,7 +53,10 @@ class ig.Years
         w-- if d.mainEndX == cellsPerRow
         "#{w}px"
       ..style \height (d) -> "#{radius * (d.mainEndY - d.mainStartY)}px"
+
+    @allIncidentElements = @incidentsParent.selectAll ".incident"
       ..style \background-color -> it.group.color
+      ..on \mouseover ~> @highlightIncident it
     @drawCanvasOverlay!
 
   resortYears: (deferGroupId) ->
@@ -124,12 +125,13 @@ class ig.Years
     # console.log "Main", inc.mainStartX, inc.mainEndX, inc.mainStartY, inc.mainEndY
     # console.log "Outro", inc.outroStartX, inc.outroEndX, inc.outroY
 
-  highlightIncident: ({incident}) ->
+  highlightIncident: (incident) ->
     if @highlightedItems
-      that.classed \active no
-    @highlightedItems = @items
-      .filter (-> it.incident is incident)
-      .classed \active yes
+      that.style \background-color -> it.group.color
+    @highlightedItems = @allIncidentElements
+      .filter (-> it is incident)
+      .style \background-color ->
+        it.group.lightColor
 
   drawCanvasOverlay: ->
     height = 240
