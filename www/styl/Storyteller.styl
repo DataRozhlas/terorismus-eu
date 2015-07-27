@@ -84,50 +84,59 @@
   padding 0px
   width 100%
   li
-     margin 0px
-     padding 8px 0px
-     float left
-     width (100% / 6)
-     text-align center
-     position relative
-     &:nth-child(1)
-       border-bottom 1px solid #984ea3
-       background darken(#984ea3, 50%)
-       &:hover
-         background darken(#984ea3, 20%)
-     &:nth-child(2)
-       border-bottom 1px solid #6d3875
-       background darken(#6d3875, 50%)
-       &:hover
-         background darken(#6d3875, 20%)
-     &:nth-child(3)
-       border-bottom 1px solid #377eb8
-       background darken(#377eb8, 50%)
-       &:hover
-         background darken(#377eb8, 20%)
-     &:nth-child(4)
-       border-bottom 1px solid #e41a1c
-       background darken(#e41a1c, 50%)
-       background linear-gradient(to right, darken(#e41a1c, 50%) 0%, darken(#e41a1c, 50%) 45%, darken(#a65628, 50%) 55%, darken(#a65628, 50%) 100%);
-       &:hover
-         background darken(#e41a1c, 20%)
-       &:after
-         content ""
-         position absolute
-         height 1px
-         width 50%
-         background #a65628
-         bottom -1px
-         right 0px
-     &:nth-child(5)
-       border-bottom 1px solid #999999
-       background darken(#999999, 50%)
-       &:hover
-         background darken(#999999, 20%)
-     &:nth-child(6)
-       border-bottom 1px solid #c
-       background darken(#c, 50%)
-       &:hover
-         background darken(#c, 20%)
+    margin 0px
+    width (100% / 6)
+    float left
+    a
+      display block
+      width 100%
+      color white
+      padding 8px 0px
+      text-align center
+      position relative
+      transition padding-top 0.2s
+      text-decoration none
+      border-bottom 3px solid
+      &:hover
+        padding-top 12px
+    &:nth-child(1) a
+      border-bottom-color #984ea3
+      background darken(#984ea3, 50%)
+      &:hover
+        background darken(#984ea3, 20%)
+    &:nth-child(2) a
+      border-bottom-color #6d3875
+      background darken(#6d3875, 50%)
+      &:hover
+        background darken(#6d3875, 20%)
+    &:nth-child(3) a
+      border-bottom-color #377eb8
+      background darken(#377eb8, 50%)
+      &:hover
+        background darken(#377eb8, 20%)
+    &:nth-child(4) a
+      border-bottom-color #e41a1c
+      background darken(#e41a1c, 50%)
+      background linear-gradient(to right, darken(#e41a1c, 50%) 0%, darken(#e41a1c, 50%) 45%, darken(#a65628, 50%) 55%, darken(#a65628, 50%) 100%);
+      &:hover
+        background darken(#e41a1c, 20%)
+      &:after
+        content ""
+        position absolute
+        height 1px
+        width 50%
+        background #a65628
+        bottom -1px
+        right 0px
+    &:nth-child(5) a
+      border-bottom-color #999999
+      background darken(#999999, 50%)
+      &:hover
+        background darken(#999999, 20%)
+    &:nth-child(6) a
+      border-bottom-color #c
+      background darken(#c, 50%)
+      &:hover
+        background darken(#c, 20%)
 
 

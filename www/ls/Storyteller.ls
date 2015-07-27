@@ -97,4 +97,6 @@ class ig.Storyteller
     @parentElement.append \ul
       ..attr \class \story-selector
       ..selectAll \li .data stories .enter!append \li
-        ..html (.topHeading)
+        ..append \a
+          ..attr \href \#
+          ..html (.topHeading)
