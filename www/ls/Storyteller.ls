@@ -1,4 +1,7 @@
 stories =
+  * title: "Česko se bojí terorismu"
+    topHeading: null
+    pages: [text: "<p>Zatím nikdy nebylo v Evropě tak bezpečně jako v posledních letech. Ještě na začátku devadesátých let měly teroristické útoky na evropském území kolem dvou set obětí ročně, loni to bylo sedm lidí.</p>"]
   * title: "Severní Irsko: Dvacet let odvetných výbuchů"
     topHeading: "Irský separatismus"
     pages:
@@ -40,7 +43,7 @@ stories =
 
 class ig.Storyteller
   (@parentElement) ->
-    @currentStory = 3
+    @currentStory = 0
     @currentPage = 0
     @element = @parentElement.append \div
       ..attr \class \story
@@ -130,9 +133,10 @@ class ig.Storyteller
         ..attr \class "container"
 
   createStorySelector: ->
+    selectableStories = stories.slice 1
     @storySelectorElements = @parentElement.append \ul
       .attr \class \story-selector
-      .selectAll \li .data stories .enter!append \li
+      .selectAll \li .data selectableStories .enter!append \li
         .append \a
           ..attr \href \#
           ..html (.topHeading)
@@ -146,7 +150,7 @@ class ig.Storyteller
 
   updateStorySelector: ->
     @storySelectorElements.classed \active (d, i) ~>
-      @currentStory == i
+      @currentStory == i + 1
 
   isLastStory: ->
     @currentStory == stories.length - 1
