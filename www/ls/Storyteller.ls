@@ -17,10 +17,10 @@ stories =
       * text: "<p>Po útocích z 11. září se zvýšila bezpečnostní opatření způsob a následně i způsob boje: začali útočit jednotlivci, inspirovaní al-Kaidou. Na rozdíl od organizací, spojených s Palestinou, většinou nemají žádné požadavky. Místo boje proti Izraeli je pojí radikální výklad islámu. </p>
 <p>Arabští nacionalisti a později islamisti mají sice na svědomí největší evropské útoky, ale uspějí poměrně vzácně. Mají tedy větší mediální pozornost, než skutečné výsledky.</p>
 <p>Od počátku devadesátých let uspěly v Evropě pouze dvě velké teroristické akce: vlakové útoky v Madridu v roce 2004 a útok na londýnské metro o rok později. Dohromady si vyžádaly 250 životů.</p>"
-  * title: "Extrémní pravice a levice: společný vrchol zažily v&nbsp;80.&nbsp;letech"
+  * title: "Extrémní <span class='extreme-right'>pravice</span> a <span class='extreme-left'>levice</span>: společný vrchol zažily v&nbsp;80.&nbsp;letech"
     topHeading: "Politický extrémismus"
     pages:
-      * text: "<p>Extrémní pravice a levice mají od sedmdesátých let shodně na svědomí přibližně 250 mrtvých. Oba směry byly nejviditelnější na přelomu sedmdesátých a osmdesátých let. Extrémní pravice ohrožovala hlavně Itálii, neofašistická skupina Nuclei Armati Rivoluzionari měla ke stovce obětí. Extrémní levice působila ve více jihoevropských zemích: mezi nejsilnějšími byly Rudé brigády v Itálii (65 mrtvých), Antifašistická odbojová skupina 1. října ve Španělsku (84 mrtvých) nebo Řecku Revoluční organizace 17. listopadu v Řecku (26 mrtvých).</p>"
+      * text: "<p>Extrémní <span class='extreme-right'>pravice</span> a <span class='extreme-left'>levice</span> mají od sedmdesátých let shodně na svědomí přibližně 250 mrtvých. Oba směry byly nejviditelnější na přelomu sedmdesátých a osmdesátých let. Extrémní <span class='extreme-right'>pravice</span> ohrožovala hlavně Itálii, neofašistická skupina Nuclei Armati Rivoluzionari měla ke stovce obětí. Extrémní <span class='extreme-left'>levice</span> působila ve více jihoevropských zemích: mezi nejsilnějšími byly Rudé brigády v Itálii (65 mrtvých), Antifašistická odbojová skupina 1. října ve Španělsku (84 mrtvých) nebo Řecku Revoluční organizace 17. listopadu v Řecku (26 mrtvých).</p>"
       * text: "<p>Od devadesátých let jsou násilnosti, spojené s oběma ideologiemi, na ústupu. Výjimkou je útok norského neonacisty Anderse Breivika v roce 2011.</p>"
   * title: "Příležitostní teroristi: Italská mafie, Arméni nebo bojovníci za Jižní Moluky"
     topHeading: "Menší uskupení"
@@ -40,7 +40,7 @@ stories =
 
 class ig.Storyteller
   (@parentElement) ->
-    @currentStory = 4
+    @currentStory = 3
     @currentPage = 0
     @element = @parentElement.append \div
       ..attr \class \story
