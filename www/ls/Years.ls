@@ -15,8 +15,6 @@ class ig.Years
             ..attr \class \title
             ..html -> it.year
     @bigIncidents.sort (a, b) -> a.previousDeaths - b.previousDeaths
-    # @bigIncidents .= slice 4, 5
-    console.log @bigIncidents
     intros = @bigIncidents.filter -> it.introStartX - it.introEndX
     outros = @bigIncidents.filter -> it.outroStartX - it.outroEndX
     mains  = @bigIncidents.filter -> it.mainStartX - it.mainEndX
@@ -32,9 +30,7 @@ class ig.Years
         w = radius * (d.introEndX - d.introStartX)
         w-- if d.introEndX == cellsPerRow
         "#{w}px"
-      ..style \background-color ->
-        console.log it
-        it.group.color
+      ..style \background-color -> it.group.color
 
     @incidentsParent.selectAll \div.incident.outro .data outros, (.id)
       ..enter!append \div
@@ -60,6 +56,7 @@ class ig.Years
         "#{w}px"
       ..style \height (d) -> "#{radius * (d.mainEndY - d.mainStartY)}px"
       ..style \background-color -> it.group.color
+    @drawCanvasOverlay!
 
   resortYears: (deferGroupId) ->
     for id, group of @groupsAssoc
@@ -122,11 +119,10 @@ class ig.Years
         incident.mainStartX = 0
         incident.mainEndX   = cellsPerRow
         incident.mainEndY   = endY
+
     # console.log "Intro", inc.introStartX, inc.introEndX, inc.introY
     # console.log "Main", inc.mainStartX, inc.mainEndX, inc.mainStartY, inc.mainEndY
     # console.log "Outro", inc.outroStartX, inc.outroEndX, inc.outroY
-
-
 
   highlightIncident: ({incident}) ->
     if @highlightedItems
@@ -134,3 +130,23 @@ class ig.Years
     @highlightedItems = @items
       .filter (-> it.incident is incident)
       .classed \active yes
+
+  drawCanvasOverlay: ->
+    height = 240
+    width = 1024
+    canvas = @element.append \canvas
+      ..attr \width 1024
+      ..attr \height 240
+    ctx = canvas.node!getContext \2d
+    ctx.translate -0.5, 0.5
+    ctx.beginPath!
+    for year, yearIndex in @years
+      for cellIndex in [1 til cellsPerRow]
+        x = yearIndex * yearWidth + cellIndex * radius
+        ctx.moveTo x, 0
+        ctx.lineTo x, height
+    for i in [1 to 62]
+      y = i * radius
+      ctx.moveTo 0, height - y
+      ctx.lineTo width, height - y
+    ctx.stroke!
