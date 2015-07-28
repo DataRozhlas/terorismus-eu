@@ -5,7 +5,6 @@ yearWidth = 21
 bottomPadding = 25
 class ig.Years
   (@parentElement, @years, @bigIncidents, @groupsAssoc) ->
-    @resortYears!
     @element = @parentElement.append \div
       ..attr \class \years
       ..selectAll \div.year .data @years .enter!append \div
@@ -14,6 +13,27 @@ class ig.Years
           ..append \span
             ..attr \class \title
             ..html -> it.year
+    @resortYears!
+    @updateGraph!
+    @drawCanvasOverlay!
+
+  resortYears: (deferGroupId) ->
+    for id, group of @groupsAssoc
+      if id != deferGroupId
+        group.yearSortIndex = group.index
+      else
+        group.yearSortIndex = -1
+    for year in @years
+      year.incidentsByGroup.sort (a, b) ->
+        a.group.yearSortIndex - b.group.yearSortIndex
+      previousDeaths = 0
+      for group in year.incidentsByGroup
+        for incident in group.list
+          incident.previousDeaths = previousDeaths
+          previousDeaths += incident.deaths
+    @repositionIncidents!
+
+  updateGraph: ->
     @bigIncidents.sort (a, b) -> a.previousDeaths - b.previousDeaths
     intros = @bigIncidents.filter -> it.introStartX - it.introEndX
     outros = @bigIncidents.filter -> it.outroStartX - it.outroEndX
@@ -57,23 +77,6 @@ class ig.Years
     @allIncidentElements = @incidentsParent.selectAll ".incident"
       ..style \background-color -> it.group.color
       ..on \mouseover ~> @highlightIncident it
-    @drawCanvasOverlay!
-
-  resortYears: (deferGroupId) ->
-    for id, group of @groupsAssoc
-      if id != deferGroupId
-        group.yearSortIndex = group.index
-      else
-        group.yearSortIndex = -1
-    for year in @years
-      year.incidentsByGroup.sort (a, b) ->
-        a.group.yearSortIndex - b.group.yearSortIndex
-      previousDeaths = 0
-      for group in year.incidentsByGroup
-        for incident in group.list
-          incident.previousDeaths = previousDeaths
-          previousDeaths += incident.deaths
-    @repositionIncidents!
 
   repositionIncidents: ->
     for incident in @bigIncidents
