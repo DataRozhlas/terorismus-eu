@@ -10,6 +10,7 @@ years = [1970 to 2014].map (year, index) ->
   yearObj =
     year: year
     index: index
+    deaths: 0
   incidentsByGroup = for i in [0 to 5]
     otherIncidentContainer =
       list: []
@@ -28,6 +29,7 @@ years = [1970 to 2014].map (year, index) ->
 for datum in data
   year = years[datum.year - 1970]
   datum.year = year
+  year.deaths += datum.deaths
   if datum.deaths > 2 || datum.isCzech
     year.incidentsByGroup[datum.group.index].list.push datum
     bigIncidents.push datum

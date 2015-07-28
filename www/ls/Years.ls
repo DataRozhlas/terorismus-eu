@@ -141,18 +141,18 @@ class ig.Years
 
 
   drawCanvasOverlay: ->
-    height = 240
-    width = 1024
+    height = 63 * radius
+    width = @years.length * yearWidth
     canvas = @element.append \canvas
       ..attr \width 1024
-      ..attr \height 240
+      ..attr \height height
     ctx = canvas.node!getContext \2d
     ctx.translate -0.5, 0.5
     ctx.beginPath!
     for year, yearIndex in @years
       for cellIndex in [1 til cellsPerRow]
         x = yearIndex * yearWidth + cellIndex * radius
-        ctx.moveTo x, 0
+        ctx.moveTo x, height - (Math.ceil year.deaths / cellsPerRow) * radius
         ctx.lineTo x, height
     for i in [1 to 62]
       y = i * radius
