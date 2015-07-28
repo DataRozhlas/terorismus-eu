@@ -77,6 +77,7 @@ class ig.Years
     @allIncidentElements = @incidentsParent.selectAll ".incident"
       ..style \background-color -> it.group.color
       ..on \mouseover ~> @highlightIncident it
+      ..on \mouseout ~> @downlightIncident!
 
   repositionIncidents: ->
     for incident in @bigIncidents
@@ -121,12 +122,16 @@ class ig.Years
         incident.mainEndY   = endY
 
   highlightIncident: (incident) ->
-    if @highlightedItems
-      that.style \background-color -> it.group.color
+    @downlightIncident!
     @highlightedItems = @allIncidentElements
       .filter (-> it is incident)
       .style \background-color ->
         it.group.lightColor
+
+  downlightIncident: ->
+    if @highlightedItems
+      that.style \background-color -> it.group.color
+
 
   drawCanvasOverlay: ->
     height = 240
