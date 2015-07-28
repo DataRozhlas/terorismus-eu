@@ -5,7 +5,7 @@ groups =
     index: 0
   "Baskický separatismus":
     name: "Baskický separatismus"
-    color: \#6d3875
+    color: \#4daf4a
     index: 1
   "Arabský a islámský terorismus":
     name: "Arabský a islámský terorismus"
