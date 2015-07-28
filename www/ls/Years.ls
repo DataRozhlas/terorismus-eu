@@ -76,10 +76,6 @@ class ig.Years
     @repositionIncidents!
 
   repositionIncidents: ->
-    # inc =
-    #   previousDeaths: 1
-    #   deaths: 6
-    # @bigIncidents = [inc]
     for incident in @bigIncidents
       start = incident.previousDeaths
       end = incident.previousDeaths + incident.deaths
@@ -120,10 +116,6 @@ class ig.Years
         incident.mainStartX = 0
         incident.mainEndX   = cellsPerRow
         incident.mainEndY   = endY
-
-    # console.log "Intro", inc.introStartX, inc.introEndX, inc.introY
-    # console.log "Main", inc.mainStartX, inc.mainEndX, inc.mainStartY, inc.mainEndY
-    # console.log "Outro", inc.outroStartX, inc.outroEndX, inc.outroY
 
   highlightIncident: (incident) ->
     if @highlightedItems
