@@ -26,11 +26,32 @@ class ig.Map
       ..append \path
         ..attr \class \land
         ..attr \d path land.features.0.geometry
-    @incidentElements = @element.selectAll \circle .data @incidents .enter!append \circle
+    @incidentsG = @element.append \g
+      ..attr \class \incidents
+    @incidentElements = @incidentsG.selectAll \circle .data @incidents .enter!append \circle
         ..attr \r 4
         ..attr \cx -> it.projected.0
         ..attr \cy -> it.projected.1
         ..attr \fill -> it.group.color
+    @highlightCirclesG = @element.append \g
+      ..attr \class \highlight-circles
+
+  drawHighlightCircles: (incidents) ->
+    clearTimeout @unHighlightTimeout if @unHighlightTimeout
+    incidents .= filter (.projected)
+    @highlightCircles = @highlightCirclesG.selectAll \circle .data incidents
+      ..enter!append \circle
+        ..attr \r 9
+      ..exit!remove!
+      ..attr \cx -> it.projected.0
+      ..attr \cy -> it.projected.1
+
+  unHighlight: ->
+    return if @unHighlightTimeout
+    @unHighlightTimeout = setTimeout do
+      ~>
+        @highlightCircles.remove!
+      200
 
   updateDownlighting: ->
     @incidentElements.classed \downlight -> it.downlight

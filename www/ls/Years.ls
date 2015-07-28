@@ -5,6 +5,7 @@ yearWidth = 21
 bottomPadding = 25
 class ig.Years
   (@parentElement, @years, @bigIncidents, @groupsAssoc) ->
+    ig.Events @
     @element = @parentElement.append \div
       ..attr \class \years
       ..selectAll \div.year .data @years .enter!append \div
@@ -130,6 +131,10 @@ class ig.Years
 
   highlightIncident: (incident) ->
     @downlightIncident!
+    if incident.isOther
+      @emit \highlight incident.list
+    else
+      @emit \highlight [incident]
     @highlightedItems = @allIncidentElements
       .filter (-> it is incident)
       .style \background-color ->
@@ -137,6 +142,7 @@ class ig.Years
 
   downlightIncident: ->
     if @highlightedItems
+      @emit \downlight
       that.style \background-color -> it.group.color
 
 

@@ -8,8 +8,17 @@
   path.land
     fill darken(#ab0000, 50%)
     stroke lighten(#ab0000, 15%)
-  circle
-    transition opacity 0.8s
-    opacity 0.8
-    &.downlight
-      opacity 0
+  .incidents
+    circle
+      transition opacity 0.8s
+      opacity 0.8
+      &.downlight
+        opacity 0
+  .highlight-circles
+    circle
+      stroke white
+      fill white
+      fill-opacity 0.2
+      stroke-dasharray 4, 3
+      stroke-width 2
+

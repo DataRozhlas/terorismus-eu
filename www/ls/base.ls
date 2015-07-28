@@ -100,6 +100,11 @@ storyteller = new ig.Storyteller container
 
     map.updateDownlighting!
 
+barchart.on \highlight (incidents) ->
+  map.drawHighlightCircles incidents
+barchart.on \downlight (incidents) ->
+  map.unHighlight!
+
 body.append \div
   ..attr \id \top-menu-shade
 new ig.Shares container
