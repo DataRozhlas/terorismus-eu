@@ -1,3 +1,4 @@
+body = d3.select 'body'
 {data, groups: groupsAssoc} = ig.getData!
 container = d3.select ig.containers.base
 groups = []
@@ -98,3 +99,8 @@ storyteller = new ig.Storyteller container
       barchart.cancelGroupHighlight!
 
     map.updateDownlighting!
+
+container.append \div
+  ..attr \id \map-border-right
+body.append \div
+  ..attr \id \top-menu-shade
