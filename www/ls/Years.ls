@@ -19,19 +19,6 @@ class ig.Years
     @updateGraph!
     @drawCanvasOverlay!
 
-  highlightGroup: (groupName) ->
-    highlightedGroup = @groupsAssoc[groupName]
-    for incident in @bigIncidents
-      incident.downlight = incident.group != highlightedGroup
-
-    for id, group of @groupsAssoc
-      if group != highlightedGroup
-        group.yearSortIndex = group.index
-      else
-        group.yearSortIndex = -1
-    @resortYears!
-    @updateDownlighting!
-
   updateDownlighting: ->
     @allIncidentElements.classed \entering no
     @allIncidentElements.classed \downlight -> it.downlight

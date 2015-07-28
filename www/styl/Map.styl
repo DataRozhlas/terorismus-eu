@@ -2,14 +2,12 @@
   position absolute
   top 0px
   right 0px
-  background black //darken(ColorBlue, 85%)
+  background black
   path.land
     fill darken(#ab0000, 50%)
     stroke lighten(#ab0000, 15%)
   circle
-    // fill lighten(#ab0000, 0%)
-    // stroke lighten(#ab0000, 15%)
-    opacity 0
-    transition opacity 0.2s
-    &.active
-      opacity 0.8
+    transition opacity 0.8s
+    opacity 0.8
+    &.downlight
+      opacity 0

@@ -5,7 +5,7 @@ for name, group of groupsAssoc
   groups[group.index] = group
 
 bigIncidents = []
-
+combinedIncidentsAndContainers = data.slice!
 years = [1970 to 2014].map (year, index) ->
   yearObj =
     year: year
@@ -18,6 +18,7 @@ years = [1970 to 2014].map (year, index) ->
       year: yearObj
       group: groups[i]
     bigIncidents.push otherIncidentContainer
+    combinedIncidentsAndContainers.push otherIncidentContainer
     list:[otherIncidentContainer]
     group: groups[i]
     otherIncidentContainer: otherIncidentContainer
@@ -43,7 +44,7 @@ for year in years
 bigIncidents .= filter -> it.deaths
 for incident, index in bigIncidents
   incident.id = index
-# new ig.Map container, data
+map = new ig.Map container, data
 barchart = new ig.Years container, years, bigIncidents, groupsAssoc
 storyteller = new ig.Storyteller container
   ..on \story (groupName) ->
@@ -51,7 +52,7 @@ storyteller = new ig.Storyteller container
       if groupName == "Politický extrémismus"
         left = groupsAssoc['Extrémní levice']
         right = groupsAssoc['Extrémní pravice']
-        for incident in bigIncidents
+        for incident in combinedIncidentsAndContainers
           incident.downlight = !(incident.group == left || incident.group == right)
         for id, group of groupsAssoc
           group.yearSortIndex = group.index
@@ -61,7 +62,7 @@ storyteller = new ig.Storyteller container
           ..resortYears!
           ..updateDownlighting!
       else if groupName == "Terorismus v Česku"
-        for incident in bigIncidents
+        for incident in combinedIncidentsAndContainers
           incident.downlight = !incident.isCzech
         for year in barchart.years
           previousDeaths = 0
@@ -79,13 +80,19 @@ storyteller = new ig.Storyteller container
           ..repositionIncidents!
           ..updateDownlighting!
       else
-        barchart.highlightGroup groupName
+        highlightedGroup = groupsAssoc[groupName]
+        for incident in combinedIncidentsAndContainers
+          incident.downlight = incident.group != highlightedGroup
+
+        for id, group of groupsAssoc
+          if group != highlightedGroup
+            group.yearSortIndex = group.index
+          else
+            group.yearSortIndex = -1
+        barchart
+          ..resortYears!
+          ..updateDownlighting!
     else
       barchart.cancelGroupHighlight!
-    # console.log groupName
 
-
-# console.log do
-#   years
-#     .map -> "#{it.year}\t#{it.deathsTotal}"
-#     .join "\n"
+    map.updateDownlighting!
