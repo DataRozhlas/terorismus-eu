@@ -100,7 +100,6 @@ storyteller = new ig.Storyteller container
 
     map.updateDownlighting!
 
-container.append \div
-  ..attr \id \map-border-right
 body.append \div
   ..attr \id \top-menu-shade
+new ig.Shares container
