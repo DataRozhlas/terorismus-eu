@@ -6,12 +6,9 @@ class ig.Map
       | a.date < b.date => -1
       | otherwise       => 0
     land = topojson.feature do
-      ig.data.world
-      ig.data.world.objects.land
+      ig.data.evropa
+      ig.data.evropa.objects.data
 
-    countries = topojson.feature do
-      ig.data.world
-      ig.data.world.objects.countries
     width = 700
     bounds = [[-16.7, 15], [37, 60.5]]
 
@@ -28,7 +25,7 @@ class ig.Map
       ..attr {width, height}
       ..append \path
         ..attr \class \land
-        ..attr \d path land.geometry
+        ..attr \d path land.features.0.geometry
     @incidentElements = @element.selectAll \circle .data @incidents .enter!append \circle
         ..attr \r 4
         ..attr \cx -> it.projected.0
