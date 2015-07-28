@@ -13,16 +13,35 @@ class ig.Years
           ..append \span
             ..attr \class \title
             ..html -> it.year
+    @incidentsParent = @element.append \div
+      ..attr \class \incidents-parent
     @resortYears!
     @updateGraph!
     @drawCanvasOverlay!
 
-  resortYears: (deferGroupId) ->
+  highlightGroup: (groupName) ->
+    highlightedGroup = @groupsAssoc[groupName]
+    for incident in @bigIncidents
+      incident.downlight = incident.group != highlightedGroup
+
     for id, group of @groupsAssoc
-      if id != deferGroupId
+      if group != highlightedGroup
         group.yearSortIndex = group.index
       else
         group.yearSortIndex = -1
+    @resortYears!
+    @updateDownlighting!
+
+  updateDownlighting: ->
+    @allIncidentElements.classed \entering no
+    @allIncidentElements.classed \downlight -> it.downlight
+    <~ setTimeout _, 1200
+    @updateGraph!
+
+  cancelGroupHighlight: ->
+    @allIncidentElements.classed \downlight no
+
+  resortYears: ->
     for year in @years
       year.incidentsByGroup.sort (a, b) ->
         a.group.yearSortIndex - b.group.yearSortIndex
@@ -38,11 +57,10 @@ class ig.Years
     intros = @bigIncidents.filter -> it.introStartX - it.introEndX
     outros = @bigIncidents.filter -> it.outroStartX - it.outroEndX
     mains  = @bigIncidents.filter -> it.mainStartX - it.mainEndX
-    @incidentsParent = @element.append \div
-      ..attr \class \incidents-parent
     @incidentsParent.selectAll \div.incident.intro .data intros, (.id)
       ..enter!append \div
-        ..attr \class "incident intro"
+        ..attr \class ->
+          "intro incident entering #{if it.downlight then 'downlight' else ''}"
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.introStartX}px"
       ..style \bottom (d) -> "#{radius * d.introY}px"
@@ -53,7 +71,8 @@ class ig.Years
 
     @incidentsParent.selectAll \div.incident.outro .data outros, (.id)
       ..enter!append \div
-        ..attr \class "incident outro"
+        ..attr \class ->
+          "outro incident entering #{if it.downlight then 'downlight' else ''}"
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.outroStartX}px"
       ..style \bottom (d) -> "#{radius * d.outroY}px"
@@ -64,7 +83,8 @@ class ig.Years
 
     @incidentsParent.selectAll \div.incident.main .data mains, (.id)
       ..enter!append \div
-        ..attr \class "incident main"
+        ..attr \class ->
+          "main incident entering #{if it.downlight then 'downlight' else ''}"
       ..exit!remove!
       ..style \left (d) -> "#{d.year.index * yearWidth +  radius * d.mainStartX}px"
       ..style \bottom (d) -> "#{radius * d.mainStartY}px"

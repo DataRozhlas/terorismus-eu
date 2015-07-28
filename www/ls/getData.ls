@@ -35,6 +35,8 @@ ig.getData = ->
   data = d3.tsv.parse ig.data.utoky, (row, index) ->
     for field, value of row
       continue if field is "group"
+      continue if field is "text"
+      continue if field is "link"
       row[field] = parseFloat value
     row.date = new Date!
       ..setTime 0
@@ -43,6 +45,7 @@ ig.getData = ->
       ..setDate row.day
     row.group = groups[row.group]
     row.index = index
+    row.isCzech = row.id in [12 314 717 719 871 932 1196]
     row
 
   {data, groups}
