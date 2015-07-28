@@ -104,6 +104,10 @@ barchart.on \highlight (incidents) ->
   map.drawHighlightCircles incidents
 barchart.on \downlight (incidents) ->
   map.unHighlight!
+map.on \importantIncident (incident) ->
+  storyteller.showIncident incident
+map.on \importantIncidentOut (incident) ->
+  storyteller.hideIncident!
 
 body.append \div
   ..attr \id \top-menu-shade

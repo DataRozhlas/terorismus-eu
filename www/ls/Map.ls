@@ -1,5 +1,6 @@
 class ig.Map
   (@parentElement, incidents) ->
+    ig.Events @
     @incidents = incidents.filter -> it.latitude and it.longitude
     @incidents.sort (a, b) ->
       | a.date > b.date => 1
@@ -9,11 +10,12 @@ class ig.Map
       ig.data.evropa
       ig.data.evropa.objects.data
 
-    width = 700
+    @width = width = 700
     bounds = [[-16.7, 15], [37, 60.5]]
 
     projection = ig.utils.geo.getProjection bounds, width
     {height} = ig.utils.geo.getDimensions bounds, projection
+    @height = height
     path = d3.geo.path!
       ..projection projection
 
@@ -35,6 +37,11 @@ class ig.Map
         ..attr \fill -> it.group.color
     @highlightCirclesG = @element.append \g
       ..attr \class \highlight-circles
+    @importantIncidentsG = @element.append \g
+      ..attr \class \important-circles
+    @voronoiG = @element.append \g
+      ..attr \class \voronoi
+    @drawImportantIncindents!
 
   drawHighlightCircles: (incidents) ->
     clearTimeout @unHighlightTimeout if @unHighlightTimeout
@@ -55,3 +62,26 @@ class ig.Map
 
   updateDownlighting: ->
     @incidentElements.classed \downlight -> it.downlight
+
+  drawImportantIncindents: ->
+    @importantIncidents = @incidents.filter -> it.text
+    voronoi = d3.geom.voronoi!
+      ..x ~> it.projected.0
+      ..y ~> it.projected.1
+      ..clipExtent [[81, 0], [@width, @height]]
+    voronoiPolygons = voronoi @importantIncidents .filter -> it
+    @voronoiG.selectAll \path .data voronoiPolygons .enter!append \path
+      .attr \d -> polygon it
+      .on \mouseover ~> @emit \importantIncident it.point
+      .on \touchstart ~> @emit \importantIncident it.point
+      .on \mouseout ~> @emit \importantIncidentOut
+
+    @importantIncidentsG.selectAll \circle .data @importantIncidents .enter!append \circle
+      ..attr \r 9
+      ..attr \cx -> it.projected.0
+      ..attr \cy -> it.projected.1
+
+
+
+polygon = ->
+  "M#{it.join "L"}Z"

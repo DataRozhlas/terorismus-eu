@@ -141,6 +141,24 @@ class ig.Storyteller
         ..delay 1
         ..attr \class "container"
 
+  showIncident: (incident) ->
+    @contentElement.classed \leaving yes
+    @tempContent = @element.append \div
+      ..attr \class "content temp-content"
+      ..transition!
+        ..delay 1
+        ..attr \class "content temp-content"
+      ..append \p .html incident.text
+
+  hideIncident: ->
+    console.log "A"
+    @tempContent
+      ..classed \leaving yes
+      ..transition!
+        ..duration 800
+        ..remove!
+    @contentElement.classed \leaving no
+
   createStorySelector: ->
     selectableStories = stories.slice 1
     @storySelectorElements = @parentElement.append \ul
