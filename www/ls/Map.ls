@@ -10,6 +10,11 @@ class ig.Map
       ig.data.evropa
       ig.data.evropa.objects.data
 
+    countriesMesh = topojson.mesh do
+      ig.data.staty
+      ig.data.staty.objects.data
+      (a, b) -> a isnt b
+
     @width = width = 700
     bounds = [[-16.7, 15], [37, 60.5]]
 
@@ -28,6 +33,10 @@ class ig.Map
       ..append \path
         ..attr \class \land
         ..attr \d path land.features.0.geometry
+      ..append \path
+        ..attr \class \boundaries
+        ..attr \d path countriesMesh
+
     @incidentsG = @element.append \g
       ..attr \class \incidents
     @incidentElements = @incidentsG.selectAll \circle .data @incidents .enter!append \circle

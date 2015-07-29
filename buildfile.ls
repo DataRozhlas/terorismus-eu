@@ -13,6 +13,7 @@ externalStyles =
 externalData =
   "utoky": "#__dirname/data/utoky.tsv"
   "evropa": "#__dirname/data/evropa.topo.json"
+  "staty": "#__dirname/data/staty.topo.json"
 
 preferScripts = <[ postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
 deferScripts = <[ geoUtils.js base.js ]>
