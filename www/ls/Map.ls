@@ -78,16 +78,25 @@ class ig.Map
     @voronoiG.selectAll \path .remove!
     @voronoiG.selectAll \path .data voronoiPolygons .enter!append \path
       .attr \d -> polygon it
-      .on \mouseover ~> @emit \importantIncident it.point
-      .on \touchstart ~> @emit \importantIncident it.point
-      .on \mouseout ~> @emit \importantIncidentOut
+      .on \mouseover ~> @highlightImportantIncident it.point
+      .on \touchstart ~> @highlightImportantIncident it.point
+      .on \mouseout ~> @downlightImportantIncident!
 
-    @importantIncidentsG.selectAll \circle .data @importantIncidents
+    @importantIncidentsCircles = @importantIncidentsG.selectAll \circle .data @importantIncidents
       ..enter!append \circle
         ..attr \r 9
       ..exit!remove!
       ..attr \cx -> it.projected.0
       ..attr \cy -> it.projected.1
+
+  highlightImportantIncident: (incident) ->
+    console.log incident
+    @importantIncidentsCircles.classed \highlighted -> it is incident
+    @emit \importantIncident incident
+
+  downlightImportantIncident: ->
+    @importantIncidentsCircles.classed \highlighted no
+    @emit \importantIncidentOut
 
 
 
