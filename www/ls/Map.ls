@@ -41,7 +41,6 @@ class ig.Map
       ..attr \class \important-circles
     @voronoiG = @element.append \g
       ..attr \class \voronoi
-    @drawImportantIncindents!
 
   drawHighlightCircles: (incident) ->
     if @unHighlightTimeout
@@ -67,22 +66,26 @@ class ig.Map
 
   updateDownlighting: ->
     @incidentElements.classed \downlight -> it.downlight
+    @drawImportantIncindents!
 
   drawImportantIncindents: ->
-    @importantIncidents = @incidents.filter -> it.text
+    @importantIncidents = @incidents.filter -> !it.downlight && it.text
     voronoi = d3.geom.voronoi!
       ..x ~> it.projected.0
       ..y ~> it.projected.1
       ..clipExtent [[81, 0], [@width, @height]]
     voronoiPolygons = voronoi @importantIncidents .filter -> it
+    @voronoiG.selectAll \path .remove!
     @voronoiG.selectAll \path .data voronoiPolygons .enter!append \path
       .attr \d -> polygon it
       .on \mouseover ~> @emit \importantIncident it.point
       .on \touchstart ~> @emit \importantIncident it.point
       .on \mouseout ~> @emit \importantIncidentOut
 
-    @importantIncidentsG.selectAll \circle .data @importantIncidents .enter!append \circle
-      ..attr \r 9
+    @importantIncidentsG.selectAll \circle .data @importantIncidents
+      ..enter!append \circle
+        ..attr \r 9
+      ..exit!remove!
       ..attr \cx -> it.projected.0
       ..attr \cy -> it.projected.1
 
