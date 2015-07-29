@@ -1,7 +1,7 @@
 stories =
   * title: "Česko se bojí terorismu"
     topHeading: null
-    groupName: null
+    groupName: "uvodka"
     pages: [text: "<p>Zatím nikdy nebylo v Evropě tak bezpečně jako v posledních letech. Ještě na začátku devadesátých let měly teroristické útoky na evropském území kolem dvou set obětí ročně, loni to bylo sedm lidí.</p>"]
   * title: "Severní Irsko: Dvacet let odvetných výbuchů"
     topHeading: "Irský separatismus"
@@ -151,7 +151,6 @@ class ig.Storyteller
       ..append \p .html incident.text
 
   hideIncident: ->
-    console.log "A"
     @tempContent
       ..classed \leaving yes
       ..transition!

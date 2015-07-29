@@ -82,6 +82,12 @@ storyteller = new ig.Storyteller container
         barchart
           ..repositionIncidents!
           ..updateDownlighting!
+      else if groupName == "uvodka"
+        for incident in combinedIncidentsAndContainers
+          incident.downlight = no
+        barchart
+          ..repositionIncidents!
+          ..updateDownlighting!
       else
         highlightedGroup = groupsAssoc[groupName]
         for incident in combinedIncidentsAndContainers
