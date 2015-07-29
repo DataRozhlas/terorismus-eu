@@ -44,7 +44,10 @@ class ig.Map
     @drawImportantIncindents!
 
   drawHighlightCircles: (incidents) ->
-    clearTimeout @unHighlightTimeout if @unHighlightTimeout
+    if @unHighlightTimeout
+      clearTimeout @unHighlightTimeout
+      @unHighlightTimeout = null
+    @importantIncidentsG.classed \hidden yes
     incidents .= filter (.projected)
     @highlightCircles = @highlightCirclesG.selectAll \circle .data incidents
       ..enter!append \circle
@@ -57,7 +60,9 @@ class ig.Map
     return if @unHighlightTimeout
     @unHighlightTimeout = setTimeout do
       ~>
+        @unHighlightTimeout = null
         @highlightCircles.remove!
+        @importantIncidentsG.classed \hidden no
       200
 
   updateDownlighting: ->
