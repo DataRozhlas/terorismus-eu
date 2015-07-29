@@ -16,11 +16,14 @@ class ig.Years
             ..html -> it.year
     @incidentsParent = @element.append \div
       ..attr \class \incidents-parent
+    @detailedIncidentParent = @element.append \div
+      ..attr \class "incidents-parent detailed-incidents"
     @resortYears!
     @updateGraph!
     @drawCanvasOverlay!
 
   updateDownlighting: ->
+    @clearDetailedIncidents!
     @allIncidentElements.classed \entering no
     @allIncidentElements.classed \downlight -> it.downlight
     <~ setTimeout _, 1200
@@ -85,7 +88,7 @@ class ig.Years
     @allIncidentElements = @incidentsParent.selectAll ".incident"
       ..style \background-color -> it.group.color
       ..on \mouseover ~> @highlightIncident it
-      ..on \mouseout ~> @downlightIncident!
+      ..on \mouseout ~> @downlightIncident it
 
   repositionIncidents: ->
     for incident in @bigIncidents
@@ -131,16 +134,53 @@ class ig.Years
 
   highlightIncident: (incident) ->
     @downlightIncident!
+    return if incident.downlight
+    @highlightedIncident = incident
     if incident.isOther
-      @emit \highlight incident.list
+      @fillUpOtherElement incident
     else
-      @emit \highlight [incident]
+      @emit \highlight incident
     @highlightedItems = @allIncidentElements
       .filter (-> it is incident)
       .style \background-color ->
         it.group.lightColor
 
-  downlightIncident: ->
+  fillUpOtherElement: (containerIncident) ->
+    deaths = []
+    previousDeaths = containerIncident.previousDeaths
+    self = @
+    for incident in containerIncident.list
+      for death in [1 to incident.deaths]
+        deaths.push do
+          order: previousDeaths
+          x: previousDeaths % cellsPerRow
+          y: Math.floor previousDeaths / cellsPerRow
+          incident: incident
+        previousDeaths++
+    @currentDetailedIncidents = @detailedIncidentParent.selectAll \div .data deaths
+      ..enter!append \div
+        ..attr \class \incident
+      ..exit!remove!
+      ..classed \last -> it.x == cellsPerRow - 1
+      ..style \left (d) -> "#{d.incident.year.index * yearWidth + radius * d.x}px"
+      ..style \bottom (d) -> "#{radius * d.y}px"
+      ..style \background-color -> it.incident.group.color
+      ..on \mouseover ->
+        @style.backgroundColor = it.incident.group.lightColor
+        self.emit \highlight it.incident
+      ..on \touchstart ->
+        self.emit \highlight it.incident
+        self.currentDetailedIncidents.style \background-color -> it.incident.group.color
+        @style.backgroundColor = it.incident.group.lightColor
+      ..on \mouseout ->
+        @style.backgroundColor = it.incident.group.color
+        self.emit \downlight
+
+
+  clearDetailedIncidents: ->
+    @detailedIncidentParent.selectAll \div .remove!
+
+  downlightIncident: (incident = @highlightedIncident) ->
     if @highlightedItems
       @emit \downlight
       that.style \background-color -> it.group.color

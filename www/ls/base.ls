@@ -100,9 +100,9 @@ storyteller = new ig.Storyteller container
 
     map.updateDownlighting!
 
-barchart.on \highlight (incidents) ->
-  map.drawHighlightCircles incidents
-barchart.on \downlight (incidents) ->
+barchart.on \highlight (incident) ->
+  map.drawHighlightCircles incident
+barchart.on \downlight (incident) ->
   map.unHighlight!
 map.on \importantIncident (incident) ->
   storyteller.showIncident incident

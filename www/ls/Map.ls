@@ -43,13 +43,13 @@ class ig.Map
       ..attr \class \voronoi
     @drawImportantIncindents!
 
-  drawHighlightCircles: (incidents) ->
+  drawHighlightCircles: (incident) ->
     if @unHighlightTimeout
       clearTimeout @unHighlightTimeout
       @unHighlightTimeout = null
     @importantIncidentsG.classed \hidden yes
-    incidents .= filter (.projected)
-    @highlightCircles = @highlightCirclesG.selectAll \circle .data incidents
+    return unless incident.projected
+    @highlightCircles = @highlightCirclesG.selectAll \circle .data [incident]
       ..enter!append \circle
         ..attr \r 9
       ..exit!remove!
@@ -61,7 +61,7 @@ class ig.Map
     @unHighlightTimeout = setTimeout do
       ~>
         @unHighlightTimeout = null
-        @highlightCircles.remove!
+        @highlightCircles.remove! if @highlightCircles
         @importantIncidentsG.classed \hidden no
       200
 
