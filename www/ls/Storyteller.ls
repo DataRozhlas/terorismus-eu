@@ -81,7 +81,7 @@ class ig.Storyteller
       ..append \a
         ..attr \class \next
         ..attr \href \#
-        ..html "<span class='hint'>Další strana </span><span class='arrow'>›</span>"
+        ..html "<span class='hint'>Číst dál</span><span class='arrow'>›</span>"
         ..on \click ~>
           d3.event.preventDefault!
           @changePage +1
