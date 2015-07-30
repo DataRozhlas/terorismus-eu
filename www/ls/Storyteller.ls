@@ -1,5 +1,5 @@
 stories =
-  * title: "Česko se bojí terorismu"
+  * title: "Česko se bojí terorismu. Evropa přitom prožívá relativně klidné období"
     topHeading: null
     groupName: "uvodka"
     pages: [text: "<p>Zatím nikdy nebylo v Evropě tak bezpečně jako v posledních letech. Ještě na začátku devadesátých let měly teroristické útoky na evropském území kolem dvou set obětí ročně, loni to bylo sedm lidí.</p>"]
