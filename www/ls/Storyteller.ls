@@ -3,8 +3,8 @@ stories =
     topHeading: null
     groupName: "uvodka"
     pages:
-      * text: "<p>Zatím nikdy nebylo v Evropě tak bezpečně jako v posledních letech. Ještě na začátku devadesátých let měly teroristické útoky na evropském území kolem dvou set obětí ročně, loni to bylo sedm lidí.</p><p>Češi přesto považují terorismus, obvykle ve spojení s imigrací, za největší aktuální hrozbu - ať už pro Českou republiku, nebo pro Evropskou unii. Ukazuje to <a href='http://www.vlada.cz/assets/evropske-zalezitosti/aktualne/CR-a-EU-v-roce-2015---na-web.pdf'>výzkum české vlády</a> z ledna i <a href='http://www.stem.cz/clanek/3061'>výzkum agentury STEM</a> z května.
-</p>"
+      * text: "<p>Ještě na začátku devadesátých let měly teroristické útoky na evropském území kolem dvou set obětí ročně, loni to bylo sedm lidí. </p><p>Češi přesto považují terorismus, obvykle ve spojení s imigrací, za největší aktuální hrozbu - ať už pro Českou republiku, nebo pro Evropskou unii. Ukazuje to <a href='http://www.vlada.cz/assets/evropske-zalezitosti/aktualne/CR-a-EU-v-roce-2015---na-web.pdf'>výzkum české vlády</a> z ledna i <a href='http://www.stem.cz/clanek/3061'>výzkum agentury STEM</a> z května.
+</p><p>Graf ve spodní části obrazovky ukazuje, kolik lidí teroristé v jednotlivých letech zabili – jeden čtvereček představuje jednu oběť. Vybarvené jsou podle toho, která teroristická skupina má útok na svědomí. Každý útok je také zakreslený v mapě."
       * text: "<p>Třetí odstavec.</p>"
   * title: "Severní Irsko: Dvacet let odvetných výbuchů"
     topHeading: "Irský separatismus"
