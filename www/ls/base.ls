@@ -105,16 +105,13 @@ storyteller = new ig.Storyteller container
       barchart.cancelGroupHighlight!
 
     map.updateDownlighting!
-incidentDisplayedInStoryteller = no
+
 barchart.on \highlight (incident) ->
   map.drawHighlightCircles incident
-  if incident.text
-    incidentDisplayedInStoryteller := yes
-    storyteller.showIncident incident
+
 barchart.on \downlight (incident) ->
   map.unHighlight!
-  if incidentDisplayedInStoryteller
-    storyteller.hideIncident!
+
 map.on \importantIncident (incident) ->
   storyteller.showIncident incident
 map.on \importantIncidentOut (incident) ->
