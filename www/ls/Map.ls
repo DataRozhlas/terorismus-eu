@@ -18,6 +18,8 @@ class ig.Map
     @width = width = 700
     bounds = [[-16.7, 15], [37, 60.5]]
 
+    console.log d3.max @incidents.map (.latitude)
+
     projection = ig.utils.geo.getProjection bounds, width
     {height} = ig.utils.geo.getDimensions bounds, projection
     @height = height
