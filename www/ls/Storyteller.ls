@@ -108,7 +108,7 @@ class ig.Storyteller
 
     if changeStory
       @changeStory!
-      @emit \story stories[@currentStory].groupName
+      @emit \story stories[@currentStory].groupName, @currentStory
     else
       @changeParagraph!
     @updateStorySelector!

@@ -27,7 +27,7 @@ class ig.Map
     for incident in @incidents
       incident.projected = projection [incident.longitude, incident.latitude]
 
-    @element = @parentElement.append \svg
+    @mapElement = @parentElement.append \svg
       ..attr \class \map
       ..attr {width, height}
       ..append \path
@@ -36,20 +36,33 @@ class ig.Map
       ..append \path
         ..attr \class \boundaries
         ..attr \d path countriesMesh
+    @canvasContainerElement = @parentElement.append \div
+    @canvasElements = for i in [0 til 7]
+      @canvasContainerElement.append \canvas
+        ..attr \class "dots #{if i > 0 then 'disabled' else ''}"
+        ..attr {width, height}
+    @currentActiveCanvas = 0
+    @drawnCanvases = for i in [0 til 7] => 0
+    @canvasContexts = for element in @canvasElements
+      element.node!getContext \2d
+        ..globalAlpha = 0.8
+
+    @element = @parentElement.append \svg
+      ..attr \class \interactive
+      ..attr {width, height}
 
     @incidentsG = @element.append \g
       ..attr \class \incidents
-    @incidentElements = @incidentsG.selectAll \circle .data @incidents .enter!append \circle
-        ..attr \r 4
-        ..attr \cx -> it.projected.0
-        ..attr \cy -> it.projected.1
-        ..attr \fill -> it.group.color
+
+    @drawIncidents @canvasContexts[0], @incidents
+
     @highlightCirclesG = @element.append \g
       ..attr \class \highlight-circles
     @importantIncidentsG = @element.append \g
       ..attr \class \important-circles
     @voronoiG = @element.append \g
       ..attr \class \voronoi
+
 
   drawHighlightCircles: (incident) ->
     if @unHighlightTimeout
@@ -73,9 +86,29 @@ class ig.Map
         @importantIncidentsG.classed \hidden no
       200
 
-  updateDownlighting: ->
-    @incidentElements.classed \downlight -> it.downlight
+  updateDownlighting: (groupIndex) ->
+    @canvasElements[@currentActiveCanvas].classed \disabled yes
+    unless @drawnCanvases[groupIndex]
+      displayedIncidents = @incidents.filter (.downlight == no)
+      @drawIncidents @canvasContexts[groupIndex], displayedIncidents
+      @drawnCanvases[groupIndex] = 1
+    @currentActiveCanvas = groupIndex
+    @canvasElements[@currentActiveCanvas].classed \disabled no
     @drawImportantIncindents!
+
+  drawIncidents: (ctx, incidents) ->
+    for incident in incidents
+      ctx
+        ..beginPath!
+        ..arc do
+          incident.projected.0
+          incident.projected.1
+          4
+          0
+          Math.PI * 2
+          no
+        ..fillStyle = incident.group.color
+        ..fill!
 
   drawImportantIncindents: ->
     @importantIncidents = @incidents.filter -> !it.downlight && it.text

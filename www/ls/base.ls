@@ -50,7 +50,7 @@ for incident, index in bigIncidents
 map = new ig.Map container, data
 barchart = new ig.Years container, years, bigIncidents, groupsAssoc
 storyteller = new ig.Storyteller container
-  ..on \story (groupName) ->
+  ..on \story (groupName, groupIndex) ->
     if groupName
       if groupName == "Politický extrémismus"
         left = groupsAssoc['Extrémní levice']
@@ -104,7 +104,7 @@ storyteller = new ig.Storyteller container
     else
       barchart.cancelGroupHighlight!
 
-    map.updateDownlighting!
+    map.updateDownlighting groupIndex
 
 barchart.on \highlight (incident) ->
   map.drawHighlightCircles incident
