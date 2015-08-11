@@ -1,3 +1,5 @@
+months = <[_ ledna února března dubna května června července srpna září října listopadu prosince]>
+
 stories =
   * title: "Česko se bojí terorismu. Evropa přitom prožívá relativně klidné období"
     topHeading: null
@@ -148,11 +150,26 @@ class ig.Storyteller
 
   showIncident: (incident) ->
     @contentElement.classed \leaving yes
+    console.log incident
+    woundedMultiple =
+      | incident.wounded == 1 => "zraněný"
+      | 1 < incident.wounded < 5  => "zranění"
+      | otherwise  => "zraněných"
+    killedMultiple =
+      | incident.deaths == 1 => "mrtvý"
+      | 1 < incident.deaths < 5  => "mrtví"
+      | otherwise  => "mrtvých"
     @tempContent = @element.append \div
       ..attr \class "content temp-content"
       ..transition!
         ..delay 1
         ..attr \class "content temp-content"
+      ..append \span
+        ..attr \class \group-title
+        ..html incident.group.name
+      ..append \span
+        ..attr \class \meta
+        ..html "#{incident.day}. #{months[incident.month]} #{incident.date.getFullYear!}: #{incident.deaths} #killedMultiple, #{incident.wounded} #woundedMultiple"
       ..append \p .html incident.text
 
   hideIncident: ->
