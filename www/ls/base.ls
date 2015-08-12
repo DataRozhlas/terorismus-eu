@@ -12,7 +12,7 @@ years = [1970 to 2014].map (year, index) ->
     year: year
     index: index
     deaths: 0
-  incidentsByGroup = for i in [0 to 5]
+  incidentsByGroup = for i in [0 to 6]
     otherIncidentContainer =
       list: []
       deaths: 0
@@ -55,6 +55,19 @@ storyteller = new ig.Storyteller container
       if groupName == "Politický extrémismus"
         left = groupsAssoc['Extrémní levice']
         right = groupsAssoc['Extrémní pravice']
+        for incident in combinedIncidentsAndContainers
+          incident.downlight = !(incident.group == left || incident.group == right)
+        for id, group of groupsAssoc
+          group.yearSortIndex = group.index
+        left.yearSortIndex = -2
+        right.yearSortIndex = -1
+        barchart
+          ..resortYears!
+          ..updateDownlighting!
+      else if groupName == "Arabský a islámský terorismus"
+        console.log groupsAssoc
+        left = groupsAssoc['Izraelsko-palestinský konflikt']
+        right = groupsAssoc['Islamistický teror po 11. září']
         for incident in combinedIncidentsAndContainers
           incident.downlight = !(incident.group == left || incident.group == right)
         for id, group of groupsAssoc

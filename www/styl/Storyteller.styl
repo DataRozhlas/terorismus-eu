@@ -122,6 +122,15 @@
   h2 span.extreme-right
     border-bottom 2px solid #a65628
 
+  span.islamic-radicals
+    border-bottom 1px solid #377eb8
+  span.palestine-nationalists
+    border-bottom 1px solid #a6cee3
+  h2 span.islamic-radicals
+    border-bottom 2px solid #377eb8
+  h2 span.palestine-nationalists
+    border-bottom 2px solid #a6cee3
+
 
 .story-selector
   position absolute
@@ -169,10 +178,20 @@
     &:nth-child(3) a
       border-bottom-color #377eb8
       background darken(#377eb8, 50%)
+      background linear-gradient(to right, darken(#377eb8, 50%) 0%, darken(#377eb8, 50%) 49%, darken(#a6cee3, 50%) 51%, darken(#a6cee3, 50%) 100%);
       &:hover
       &:active
       &.active
         background darken(#377eb8, 20%)
+        background linear-gradient(to right, darken(#377eb8, 20%) 0%, darken(#377eb8, 20%) 49%, darken(#a6cee3, 20%) 51%, darken(#a6cee3, 20%) 100%);
+      &:after
+        content ""
+        position absolute
+        height 3px
+        width 50%
+        background #a6cee3
+        bottom -3px
+        right 0px
     &:nth-child(4) a
       border-bottom-color #e41a1c
       background darken(#e41a1c, 50%)

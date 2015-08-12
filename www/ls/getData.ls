@@ -7,22 +7,26 @@ groups =
     name: "Baskický separatismus"
     color: \#4daf4a
     index: 1
-  "Arabský a islámský terorismus":
-    name: "Arabský a islámský terorismus"
+  "Islamistický teror po 11. září":
+    name: "Islamistický teror po 11. září"
     color: \#377eb8
     index: 2
+  "Izraelsko-palestinský konflikt":
+    name: "Izraelsko – palestinský konflikt"
+    color: \#a6cee3
+    index: 3
   "Extrémní levice":
     name: "Extrémní levice"
     color: \#e41a1c
-    index: 3
+    index: 4
   "Extrémní pravice":
     name: "Extrémní pravice"
     color: \#a65628
-    index: 4
+    index: 5
   "Ostatní":
     name: "Ostatní"
     color: \#999999
-    index: 5
+    index: 6
 scale = d3.scale.linear!
 
 for name, group of groups
