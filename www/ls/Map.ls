@@ -26,6 +26,15 @@ class ig.Map
 
     for incident in @incidents
       incident.projected = projection [incident.longitude, incident.latitude]
+      switch incident.dataId
+        | 3, 10, 22 =>
+          incident.projected.0 += 5
+          incident.projected.1 += 5
+        | 6 =>
+          incident.projected.0 -= 5
+          incident.projected.1 += 5
+        | 26, 24=>
+          incident.projected.1 -= 5
 
     @mapElement = @parentElement.append \svg
       ..attr \class \map

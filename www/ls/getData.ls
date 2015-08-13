@@ -50,6 +50,7 @@ ig.getData = ->
     row.group = groups[row.group]
     row.index = index
     row.isCzech = row.id in [12 314 717 719 871 932 1196]
+    row.dataId = row.id
     row
 
   {data, groups}

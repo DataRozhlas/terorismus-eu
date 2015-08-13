@@ -47,6 +47,7 @@ for year in years
 bigIncidents .= filter -> it.deaths
 for incident, index in bigIncidents
   incident.id = index
+
 map = new ig.Map container, data
 barchart = new ig.Years container, years, bigIncidents, groupsAssoc
 storyteller = new ig.Storyteller container
