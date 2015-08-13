@@ -90,6 +90,10 @@ class ig.Map
     @canvasElements[@currentActiveCanvas].classed \disabled yes
     unless @drawnCanvases[groupIndex]
       displayedIncidents = @incidents.filter (.downlight == no)
+      displayedIncidents.sort (a, b) ->
+        | a.text and not b.text => 1
+        | b.text and not a.text => -1
+        | otherwise => 0
       @drawIncidents @canvasContexts[groupIndex], displayedIncidents
       @drawnCanvases[groupIndex] = 1
     @currentActiveCanvas = groupIndex
