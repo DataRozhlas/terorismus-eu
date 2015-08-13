@@ -147,7 +147,6 @@ class ig.Storyteller
 
   showIncident: (incident) ->
     @contentElement.classed \leaving yes
-    console.log incident
     woundedMultiple =
       | incident.wounded == 1 => "zraněný"
       | 1 < incident.wounded < 5  => "zranění"
