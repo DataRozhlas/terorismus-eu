@@ -21,6 +21,9 @@ class ig.Years
     @resortYears!
     @updateGraph!
     @drawCanvasOverlay!
+    @element.append \div
+      ..attr \class \year-notice
+      ..html "V datech bohužel chybí rok 1993, kdy ale na evropském území podle jiných zdrojů nedošlo k žádnému útoku s velkým počtem obětí"
 
   updateDownlighting: ->
     @clearDetailedIncidents!
