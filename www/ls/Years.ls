@@ -24,6 +24,9 @@ class ig.Years
     @element.append \div
       ..attr \class \year-notice
       ..html "V datech bohužel chybí rok 1993, kdy ale na evropském území podle jiných zdrojů nedošlo k žádnému útoku s velkým počtem obětí"
+    @element.append \div
+      ..attr \class \scale-notice
+      ..html "1 čtvereček představuje<br>1 oběť útoku"
 
   updateDownlighting: ->
     @clearDetailedIncidents!
